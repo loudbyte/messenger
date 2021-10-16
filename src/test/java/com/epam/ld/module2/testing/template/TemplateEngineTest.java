@@ -6,8 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TemplateEngineTest {
 
@@ -28,5 +27,12 @@ public class TemplateEngineTest {
     public void messageShouldNotBeBlank() {
         String message = templateEngine.generateMessage(new Template(), new Client());
         assertTrue(StringUtils.isNotBlank(message));
+    }
+
+    @Test
+    public void templateShouldReturnSubject() {
+        Template template = new Template();
+        String subject = template.getSubject();
+        assertEquals("Subject: #{subject}", subject);
     }
 }
