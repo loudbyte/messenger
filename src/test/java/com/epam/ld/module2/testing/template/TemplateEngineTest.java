@@ -11,10 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TemplateEngineTest {
 
     private TemplateEngine templateEngine;
+    private Template template;
 
     @BeforeEach
     public void setUp() {
         templateEngine = new TemplateEngine();
+        template = new Template();
     }
 
     @Test
@@ -31,14 +33,12 @@ public class TemplateEngineTest {
 
     @Test
     public void templateShouldReturnSubject() {
-        Template template = new Template();
         String subject = template.getSubject();
         assertEquals("Subject: #{subject}", subject);
     }
 
     @Test
     public void messageShouldBeFromTemplate() {
-        Template template = new Template();
         String message = templateEngine.generateMessage(template, new Client());
         assertEquals(template.getSubject(), message);
     }
