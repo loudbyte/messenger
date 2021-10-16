@@ -35,4 +35,11 @@ public class TemplateEngineTest {
         String subject = template.getSubject();
         assertEquals("Subject: #{subject}", subject);
     }
+
+    @Test
+    public void messageShouldBeFromTemplate() {
+        Template template = new Template();
+        String message = templateEngine.generateMessage(template, new Client());
+        assertEquals(template.getSubject(), message);
+    }
 }
