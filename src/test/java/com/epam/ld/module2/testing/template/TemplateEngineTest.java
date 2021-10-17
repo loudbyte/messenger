@@ -38,13 +38,7 @@ public class TemplateEngineTest {
     }
 
     @Test
-    public void messageShouldBeFromTemplate() {
-        String message = templateEngine.generateMessage(template, new Client());
-        assertEquals(template.getSubject(), message);
-    }
-
-    @Test
-    public void messageShouldBeWithBody() {
+    public void messageShouldBeWithSubjectAndBody() {
         String message = templateEngine.generateMessage(template, new Client());
         assertEquals(template.getSubject() + "\n" + template.getBody(), message);
     }
