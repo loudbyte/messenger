@@ -7,4 +7,8 @@ public class Template {
     public String getSubject() {
         return "Subject: #{subject}";
     }
+
+    public String getBody() {
+        return null;
+    }
 }
