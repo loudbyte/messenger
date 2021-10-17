@@ -49,11 +49,12 @@ class MessengerTest {
     @Test
     public void subjectShouldBeSet() {
         Template template = new Template();
-        provideInput("My subject");
+        String expectedSubject = "My subject";
+        provideInput(expectedSubject);
 
         messenger.sendMessage(new Client(), template);
 
-        assertEquals("Subject: #{My Subject}\nBody: #{body}", getOutput());
+        assertEquals("Subject: #{" + expectedSubject +"}\nBody: #{body}", getOutput());
     }
 
 }
