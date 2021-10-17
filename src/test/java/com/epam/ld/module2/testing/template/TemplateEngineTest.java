@@ -48,4 +48,10 @@ public class TemplateEngineTest {
         String message = templateEngine.generateMessage(template, new Client());
         assertEquals(template.getSubject() + "\n" + template.getBody(), message);
     }
+
+    @Test
+    public void templateShouldReturnBody() {
+        String body = template.getBody();
+        assertEquals("Body: #{body}", body);
+    }
 }
