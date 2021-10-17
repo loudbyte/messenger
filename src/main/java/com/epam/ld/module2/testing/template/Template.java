@@ -9,6 +9,6 @@ public class Template {
     }
 
     public String getBody() {
-        return null;
+        return "Body: #{body}";
     }
 }
