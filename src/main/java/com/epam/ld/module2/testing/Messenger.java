@@ -1,6 +1,7 @@
 package com.epam.ld.module2.testing;
 
 
+import com.epam.ld.module2.testing.exception.BusinessException;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 
@@ -28,8 +29,10 @@ public class Messenger {
      *
      * @param client   the client
      * @param template the template
+     *
+     * @throws BusinessException if message generation failed
      */
-    public void sendMessage(Client client, Template template) {
+    public void sendMessage(Client client, Template template) throws BusinessException {
         String messageContent =
             templateEngine.generateMessage(template, client);
         mailServer.send(client.getAddresses(), messageContent);

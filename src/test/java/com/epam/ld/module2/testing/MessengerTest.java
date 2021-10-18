@@ -1,5 +1,6 @@
 package com.epam.ld.module2.testing;
 
+import com.epam.ld.module2.testing.exception.BusinessException;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 import org.junit.jupiter.api.AfterEach;
@@ -47,7 +48,7 @@ class MessengerTest {
     }
 
     @Test
-    public void subjectShouldBeSet() {
+    public void subjectShouldBeSet() throws BusinessException {
         Template template = new Template();
         String expectedSubject = "My subject";
         provideInput(expectedSubject);
