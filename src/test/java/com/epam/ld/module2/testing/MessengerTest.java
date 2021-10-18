@@ -7,38 +7,42 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class MessengerTest {
 
     private Messenger messenger;
-    private final InputStream systemIn = System.in;
-    private final PrintStream systemOut = System.out;
+    private static final InputStream systemIn = System.in;
+    private static final PrintStream systemOut = System.out;
 
     private ByteArrayInputStream testIn;
     private ByteArrayOutputStream testOut;
 
     @BeforeEach
-    public void setUpOutput() {
+    public void setUpOutput() throws UnsupportedEncodingException {
         testOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut));
+        System.setOut(new PrintStream(testOut, false, StandardCharsets.UTF_8.toString()));
         MailServer mailServer = new MailServer();
         TemplateEngine templateEngine = new TemplateEngine();
         messenger = new Messenger(mailServer, templateEngine);
     }
 
     private void provideInput(String data) {
-        testIn = new ByteArrayInputStream(data.getBytes());
+        testIn = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         System.setIn(testIn);
     }
 
     private String getOutput() {
-        return testOut.toString();
+        try {
+            return testOut.toString(StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            fail();
+            return null;
+        }
     }
 
     @AfterEach
