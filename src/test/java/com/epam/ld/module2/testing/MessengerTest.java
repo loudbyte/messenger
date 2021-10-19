@@ -54,12 +54,12 @@ class MessengerTest {
     @Test
     public void subjectShouldBeSet() throws BusinessException {
         Template template = new Template();
-        String expectedSubject = "My subject";
+        String expectedSubject = "My subject\nMy body";
         provideInput(expectedSubject);
 
         messenger.sendMessage(new Client(), template);
 
-        assertEquals("Subject: #{" + expectedSubject +"}\nBody: #{body}", getOutput());
+        assertEquals("Enter the subject: Enter the body: Subject: #{My subject}\nBody: #{My body}", getOutput());
     }
 
 }
