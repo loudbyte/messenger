@@ -22,14 +22,23 @@ public class TemplateEngine {
         String messageTemplate = template.getSubject() + "\n" + template.getBody();
         Scanner scanner = new Scanner(System.in);
         String subject;
+        String body;
+            subject = getString(scanner, "Enter the subject: ");
+            String messageWithSubject = messageTemplate.replace("subject", subject);
+            body = getString(scanner, "Enter the body: ");
+            return messageWithSubject.replace("body", body);
+    }
+
+    private String getString(Scanner scanner, String prompt) throws BusinessException {
+        System.out.print(prompt);
         if (scanner.hasNext()) {
-            subject = scanner.nextLine();
-            if (subject == null) {
-                throw new BusinessException("Subject cannot be null");
+            String string = scanner.nextLine();
+            if (string == null || string.length() == 0 ) {
+                throw new BusinessException("Message cannot be null");
             }
-            return messageTemplate.replace("subject", subject);
+            return string;
         } else {
-            throw new BusinessException("Subject should be specified");
+            throw new BusinessException("Message should be specified");
         }
     }
 }
