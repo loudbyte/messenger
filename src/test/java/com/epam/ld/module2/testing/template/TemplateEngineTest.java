@@ -57,10 +57,9 @@ public class TemplateEngineTest {
 
     @Test
     public void messageShouldBeWithSubjectAndBody() throws BusinessException {
-        provideInput("My message");
+        provideInput("My subject\nMy body");
         String message = templateEngine.generateMessage(template, new Client());
-        assertTrue(message.contains("Subject:"));
-        assertTrue(message.contains("Body:"));
+        assertEquals("Subject: #{My subject}\nBody: #{My body}", message);
     }
 
     @Test
