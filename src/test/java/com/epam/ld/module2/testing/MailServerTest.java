@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MailServerTest {
 
@@ -29,7 +30,7 @@ public class MailServerTest {
         System.setIn(testIn);
     }
 
-    private String getOutput() {
+    private String getOutputFromConsole() {
         try {
             return testOut.toString("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -49,9 +50,25 @@ public class MailServerTest {
         final String testString = "Subject: #{subject}\nBody: #{body}";
         provideInput(testString);
 
-        MailServer mailServer = new MailServer();
+        MailServer mailServer = new MailServer(new IOService());
         mailServer.send("", testString);
 
-        assertEquals(testString, getOutput());
+        assertEquals(testString, getOutputFromConsole());
+    }
+
+    @Test
+    public void mailServerShouldReadAndSendMessageToFile() {
+        String subject = "test subject";
+        String body = "test body";
+        final String testString = "Subject: #{" + subject + "}\nBody: #{" + body + "}";
+        provideInput(testString);
+        List<String> testInput = Arrays.asList(subject, body);
+
+        MockIOService mockIOService = new MockIOService(testInput);
+
+        MailServer mailServer = new MailServer(mockIOService);
+        mailServer.sendToFile("", testString);
+
+        assertAll(() -> mockIOService.writeToFile(testString));
     }
 }

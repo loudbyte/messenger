@@ -26,7 +26,7 @@ class MessengerTest {
     public void setUpOutput() throws UnsupportedEncodingException {
         testOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(testOut, false, StandardCharsets.UTF_8.toString()));
-        MailServer mailServer = new MailServer();
+        MailServer mailServer = new MailServer(new IOService());
         TemplateEngine templateEngine = new TemplateEngine();
         messenger = new Messenger(mailServer, templateEngine);
     }
