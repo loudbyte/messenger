@@ -1,8 +1,11 @@
 package com.epam.ld.module2.testing.template;
 
 import com.epam.ld.module2.testing.Client;
+import com.epam.ld.module2.testing.IOService;
 import com.epam.ld.module2.testing.exception.BusinessException;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,6 +30,23 @@ public class TemplateEngine {
             String messageWithSubject = messageTemplate.replace("subject", subject);
             body = getString(scanner, "Enter the body: ");
             return messageWithSubject.replace("body", body);
+    }
+
+    public String generateMessageFromFile(Template template, Client client) {
+        IOService ioService = new IOService();
+        String messageTemplate = template.getSubject() + "\n" + template.getBody();
+        String subject;
+        String body;
+        List<String> inputFromFile = null;
+        try {
+            inputFromFile = ioService.getInputFromFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        subject = inputFromFile.get(0);
+        body = inputFromFile.get(1);
+        String messageWithSubject = messageTemplate.replace("subject", subject);
+        return messageWithSubject.replace("body", body);
     }
 
     private String getString(Scanner scanner, String prompt) throws BusinessException {

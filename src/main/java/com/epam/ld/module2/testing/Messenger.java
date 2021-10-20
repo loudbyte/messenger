@@ -37,4 +37,10 @@ public class Messenger {
             templateEngine.generateMessage(template, client);
         mailServer.send(client.getAddresses(), messageContent);
     }
+
+    public void sendMessageToFile(Client client, Template template) throws BusinessException {
+        String messageContentFromFile =
+                templateEngine.generateMessageFromFile(template, client);
+        mailServer.sendToFile(client.getAddresses(), messageContentFromFile);
+    }
 }
