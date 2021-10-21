@@ -14,7 +14,7 @@ public class MailServer {
     }
 
     /**
-     * Send notification.
+     * Send notification to console.
      *
      * @param addresses  the addresses
      * @param messageContent the message content
@@ -23,6 +23,12 @@ public class MailServer {
         System.out.print(messageContent);
     }
 
+    /**
+     * Send notification to file.
+     *
+     * @param addresses  the addresses
+     * @param messageContentFromFile the message content
+     */
     public void sendToFile(String addresses, String messageContentFromFile) {
         try {
             ioService.writeToFile(messageContentFromFile);

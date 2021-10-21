@@ -32,6 +32,13 @@ public class TemplateEngine {
             return messageWithSubject.replace("body", body);
     }
 
+    /**
+     * Generate message string from file.
+     *
+     * @param template the template
+     * @param client   the client
+     * @return the string
+     */
     public String generateMessageFromFile(Template template, Client client) {
         IOService ioService = new IOService();
         String messageTemplate = template.getSubject() + "\n" + template.getBody();

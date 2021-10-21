@@ -25,7 +25,7 @@ public class Messenger {
     }
 
     /**
-     * Send message.
+     * Send message to consile.
      *
      * @param client   the client
      * @param template the template
@@ -38,7 +38,14 @@ public class Messenger {
         mailServer.send(client.getAddresses(), messageContent);
     }
 
-    public void sendMessageToFile(Client client, Template template) throws BusinessException {
+    /**
+     * Send message to file.
+     *
+     * @param client   the client
+     * @param template the template
+     *
+     */
+    public void sendMessageToFile(Client client, Template template) {
         String messageContentFromFile =
                 templateEngine.generateMessageFromFile(template, client);
         mailServer.sendToFile(client.getAddresses(), messageContentFromFile);
