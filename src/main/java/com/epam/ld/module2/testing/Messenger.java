@@ -1,6 +1,7 @@
 package com.epam.ld.module2.testing;
 
 
+import com.epam.ld.module2.testing.exception.BusinessException;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 
@@ -24,14 +25,29 @@ public class Messenger {
     }
 
     /**
-     * Send message.
+     * Send message to consile.
      *
      * @param client   the client
      * @param template the template
+     *
+     * @throws BusinessException if message generation failed
      */
-    public void sendMessage(Client client, Template template) {
+    public void sendMessage(Client client, Template template) throws BusinessException {
         String messageContent =
             templateEngine.generateMessage(template, client);
         mailServer.send(client.getAddresses(), messageContent);
+    }
+
+    /**
+     * Send message to file.
+     *
+     * @param client   the client
+     * @param template the template
+     *
+     */
+    public void sendMessageToFile(Client client, Template template) {
+        String messageContentFromFile =
+                templateEngine.generateMessageFromFile(template, client);
+        mailServer.sendToFile(client.getAddresses(), messageContentFromFile);
     }
 }
