@@ -8,6 +8,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,6 +59,7 @@ public class MailServerTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void mailServerShouldReadAndSendMessageToFile() {
         String subject = "test subject";
         String body = "test body";
