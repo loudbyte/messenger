@@ -3,15 +3,20 @@ package com.epam.ld.module2.testing.template;
 
 import com.epam.ld.module2.testing.Client;
 import com.epam.ld.module2.testing.exception.BusinessException;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class TemplateEngineTest {
 
@@ -60,6 +65,16 @@ public class TemplateEngineTest {
         provideInput("My subject\nMy body");
         String message = templateEngine.generateMessage(template, new Client());
         assertEquals("Subject: #{My subject}\nBody: #{My body}", message);
+    }
+
+    @TestFactory
+    public Collection<DynamicTest> templateShouldReturnCorrectParameters() {
+        return Arrays.asList(
+          dynamicTest("Should return correct subject template",
+              () -> assertEquals("Subject: #{subject}", template.getSubject())),
+          dynamicTest("Should return correct body template",
+              () -> assertEquals("Body: #{body}", template.getBody()))
+        );
     }
 
     @Test
