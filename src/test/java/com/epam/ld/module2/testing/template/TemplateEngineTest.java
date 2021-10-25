@@ -14,6 +14,8 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
@@ -81,5 +83,21 @@ public class TemplateEngineTest {
     public void templateShouldReturnBody() {
         String body = template.getBody();
         assertEquals("Body: #{body}", body);
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "body",
+        "My Body",
+        "123123"
+    })
+    public void templateEngineShouldGenerateBody(String testBody) throws BusinessException {
+        provideInput("subject\n" + testBody);
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        String message = templateEngine.generateMessage(new Template(), new Client());
+
+        assertEquals("Subject: #{subject}\nBody: #{" + testBody + "}", message);
     }
 }
